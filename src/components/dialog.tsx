@@ -1,5 +1,6 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import cn from 'classnames'
+import type React from 'react'
 import XIcon from '../assets/icons/x.svg?react'
 import ButtonIcon from './button-icon'
 import Card from './card'
@@ -20,13 +21,13 @@ export function DialogOverlay({
     <DialogPrimitive.Overlay
       className={cn(
         `
-    fixed inset-0 z-50 bg-background-secondary/60
-    backdrop-blur-sm
-    data-[state=open]:animate-in
-    data-[state=closed]:animate-out
-    data-[state=open]:fade-in-0
-    data-[state-closed]:fade-out-0
-  `,
+      fixed inset-0 z-50 bg-background-secondary/60
+      backdrop-blur-sm
+      data-[state=open]:animate-in
+      data-[state=open]:fade-in-0 
+      data-[state=closed]:animate-out
+      data-[state=closed]:fade-out-0
+    `,
         className
       )}
       {...props}
@@ -47,15 +48,15 @@ export function DialogContent({
         ref={ref}
         className={cn(
           `
-            fixed left-[50%] top-[50%] w-full max-w-[32rem] 
-            z-[60] translate-x-[-50%] translate-y-[-50%] 
-            data-[state=open]:animate-in 
-            data-[state=open]:fade-in-0 
-            data-[state=open]:slide-in-from-bottom-[48%] 
-            data-[state=closed]:animate-out 
-            data-[state=closed]:fade-out-0 
-            data-[state=closed]:slide-out-to-bottom-[48%]
-            `,
+        fixed left-[50%] top-[50%] w-full max-w-[32rem] 
+        z-[60] translate-x-[-50%] translate-y-[-50%]
+        data-[state=open]:animate-in
+        data-[state=open]:fade-in-0 
+        data-[state=open]:slide-in-from-bottom-[48%]
+        data-[state=closed]:animate-out
+        data-[state=closed]:fade-out-0
+        data-[state=closed]:slide-out-to-bottom-[48%]
+        `,
           className
         )}
         {...props}
@@ -76,7 +77,12 @@ export function DialogHeader({
   return (
     <>
       <header
-        className={cn(`flex items-center justify-between`, className)}
+        className={cn(
+          `
+          flex items-center justify-between
+        `,
+          className
+        )}
         {...props}
       >
         <DialogPrimitive.Title>
@@ -88,7 +94,7 @@ export function DialogHeader({
           <ButtonIcon icon={XIcon} variant="ghost" />
         </DialogClose>
       </header>
-      <Divider className="mt-1.5 mb-1.5" />
+      <Divider className="mt-1.5 mb-5" />
     </>
   )
 }
@@ -106,7 +112,7 @@ export function DialogFooter({
 }: React.ComponentProps<'div'>) {
   return (
     <div {...props}>
-      <Divider className="mt-5 mb-5" />
+      <Divider className="mt-5 mb-1.5" />
       <footer className="flex items-center justify-end gap-3">
         {children}
       </footer>
