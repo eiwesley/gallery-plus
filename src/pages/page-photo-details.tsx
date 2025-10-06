@@ -7,23 +7,17 @@ import Text from '../components/text'
 import AlbumsListSelectable from '../contexts/albums/components/albums-list-selectable'
 import useAlbums from '../contexts/albums/hooks/useAlbums'
 import PhotosNavigator from '../contexts/photos/components/photos-navigator'
+import usePhoto from '../contexts/photos/hooks/use-photo'
 import type { Photo } from '../contexts/photos/models/photo'
 
 export default function PagePhotoDetails() {
   const { id } = useParams()
+  const { photo, isLoadingPhoto } = usePhoto(id)
   const { albums, isLoadingAlbums } = useAlbums()
-  // Apenas para fazer o test do mock
-  const isLoadingPhoto = false
-  const photo = {
-    id: '123',
-    title: 'Olá Mundo',
-    imageId: 'portrait-tower.png',
-    albums: [
-      { id: '3421', title: 'Album 1' },
-      { id: '1234', title: 'Album 2' },
-      { id: '5678', title: 'Album 3' },
-    ],
-  } as Photo
+
+  if (!isLoadingPhoto && !photo) {
+    return <div>Foto não encontrada</div>
+  }
 
   return (
     <Container>
@@ -43,7 +37,7 @@ export default function PagePhotoDetails() {
         <div className="space-y-3">
           {!isLoadingPhoto ? (
             <ImagePreview
-              src={`/images/${photo?.imageId}`}
+              src={`${import.meta.env.VITE_IMAGES_URL}/${photo?.imageId}`}
               title={photo?.title}
               imageClassName="h-[21rem]"
             />
@@ -63,7 +57,7 @@ export default function PagePhotoDetails() {
           </Text>
 
           <AlbumsListSelectable
-            photo={photo}
+            photo={photo as Photo}
             albums={albums}
             loading={isLoadingAlbums}
           />
