@@ -46,6 +46,11 @@ export function DialogContent({
       <DialogOverlay />
       <DialogPrimitive.Content
         ref={ref}
+        aria-describedby={
+          props['aria-describedby'] === undefined
+            ? ''
+            : props['aria-describedby']
+        }
         className={cn(
           `
         fixed left-[50%] top-[50%] w-full max-w-[32rem] 
